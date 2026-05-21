@@ -1,4 +1,4 @@
-package com.solo_finance_app.auth;
+package com.solo_finance_app.auth.dto;
 
 import lombok.Data;
 
