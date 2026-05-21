@@ -14,4 +14,6 @@ public class MonthlySummaryResponse {
     private Double totalIncome;
 
     private Double totalSavings;
+
+    private String Warning;
 }

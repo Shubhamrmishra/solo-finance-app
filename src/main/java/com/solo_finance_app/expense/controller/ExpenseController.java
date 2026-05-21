@@ -16,8 +16,7 @@ public class ExpenseController {
     private final ExpenseService expenseService;
 
     @PostMapping
-    public String addExpense(
-            @RequestBody ExpenseRequest request) {
+    public String addExpense(@RequestBody ExpenseRequest request) {
 
         return expenseService.addExpense(request);
     }
@@ -27,4 +26,5 @@ public class ExpenseController {
 
         return expenseService.getMyExpenses();
     }
+
 }

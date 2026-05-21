@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.solo_finance_app.common.Constants.EXPENSE_WARNING;
+
 @Service
 @RequiredArgsConstructor
 public class AnalyticsService {
@@ -36,6 +38,10 @@ public class AnalyticsService {
 
         double savings = monthlyIncome - totalExpense;
 
+        if (totalExpense >= 3000){
+            return MonthlySummaryResponse.builder().totalExpense(totalExpense).totalIncome(monthlyIncome).totalSavings(savings).Warning(EXPENSE_WARNING).build();
+        }
+
         return MonthlySummaryResponse.builder().totalExpense(totalExpense).totalIncome(monthlyIncome).totalSavings(savings).build();
     }
 
@@ -50,10 +56,6 @@ public class AnalyticsService {
         return results.stream().map(result ->
                         CategoryExpenseResponse.builder()
                                 .category((String) result[0])
-                                .totalAmount(
-                                        ((Number) result[1])
-                                                .doubleValue()
-                                ).build()
-        ).toList();
+                                .totalAmount(((Number) result[1]).doubleValue()).build()).toList();
     }
 }
