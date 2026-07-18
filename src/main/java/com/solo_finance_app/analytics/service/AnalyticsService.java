@@ -4,6 +4,7 @@ import com.solo_finance_app.analytics.dt.CategoryExpenseResponse;
 import com.solo_finance_app.analytics.dt.MonthlySummaryResponse;
 import com.solo_finance_app.expense.entity.Expense;
 import com.solo_finance_app.expense.repository.ExpenseRepository;
+import com.solo_finance_app.user.CurrentUserService;
 import com.solo_finance_app.user.User;
 import com.solo_finance_app.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +22,11 @@ public class AnalyticsService {
 
     private final ExpenseRepository expenseRepository;
     private final UserRepository userRepository;
+    private final CurrentUserService currentUserService;
 
     public MonthlySummaryResponse getMonthlySummary(Double monthlyIncome) {
 
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        User user = userRepository.findByEmail(email).orElseThrow();
+        User user = currentUserService.getCurrentUser();
 
         LocalDate startDate = LocalDate.now().withDayOfMonth(1);
 
@@ -47,9 +47,7 @@ public class AnalyticsService {
 
     public List<CategoryExpenseResponse> getCategoryWiseExpenses() {
 
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        User user = userRepository.findByEmail(email).orElseThrow();
+        User user = currentUserService.getCurrentUser();
 
         List<Object[]> results = expenseRepository.getCategoryWiseExpenses(user);
 

@@ -5,6 +5,7 @@ import com.solo_finance_app.budget.entity.Budget;
 import com.solo_finance_app.budget.repository.BudgetRepository;
 import com.solo_finance_app.expense.repository.ExpenseRepository;
 
+import com.solo_finance_app.user.CurrentUserService;
 import com.solo_finance_app.user.User;
 import com.solo_finance_app.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +23,12 @@ public class BudgetService {
     private final BudgetRepository budgetRepository;
     private final ExpenseRepository expenseRepository;
     private final UserRepository userRepository;
+    private final CurrentUserService currentUserService;
+
 
     public String createBudget(BudgetRequest request) {
 
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        User user = userRepository.findByEmail(email).orElseThrow();
+        User user = currentUserService.getCurrentUser();
 
         Budget budget = Budget.builder()
                 .category(request.getCategory())
@@ -42,9 +43,7 @@ public class BudgetService {
 
     public List<BudgetResponse> getMyBudgets() {
 
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        User user = userRepository.findByEmail(email).orElseThrow();
+        User user = currentUserService.getCurrentUser();
 
         List<Budget> budgets = budgetRepository.findByUser(user);
 
