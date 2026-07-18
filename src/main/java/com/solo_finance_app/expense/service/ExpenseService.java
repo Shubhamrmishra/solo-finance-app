@@ -3,6 +3,7 @@ package com.solo_finance_app.expense.service;
 import com.solo_finance_app.expense.dto.ExpenseRequest;
 import com.solo_finance_app.expense.entity.Expense;
 import com.solo_finance_app.expense.repository.ExpenseRepository;
+import com.solo_finance_app.user.CurrentUserService;
 import com.solo_finance_app.user.User;
 import com.solo_finance_app.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,16 +19,11 @@ public class ExpenseService {
 
     private final ExpenseRepository expenseRepository;
     private final UserRepository userRepository;
+    private final CurrentUserService currentUserService;
 
     public String addExpense(ExpenseRequest request) {
 
-        String email =
-                SecurityContextHolder.getContext()
-                        .getAuthentication()
-                        .getName();
-
-        User user = userRepository.findByEmail(email)
-                .orElseThrow();
+        User user = currentUserService.getCurrentUser();
 
         Expense expense = Expense.builder()
                 .title(request.getTitle())
@@ -45,13 +41,7 @@ public class ExpenseService {
 
     public List<Expense> getMyExpenses() {
 
-        String email =
-                SecurityContextHolder.getContext()
-                        .getAuthentication()
-                        .getName();
-
-        User user = userRepository.findByEmail(email)
-                .orElseThrow();
+        User user = currentUserService.getCurrentUser();
 
         return expenseRepository.findByUser(user);
     }

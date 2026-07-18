@@ -3,6 +3,7 @@ package com.solo_finance_app.recurring.service;
 import com.solo_finance_app.recurring.dto.RecurringExpenseRequest;
 import com.solo_finance_app.recurring.entity.RecurringExpense;
 import com.solo_finance_app.recurring.repository.RecurringExpenseRepository;
+import com.solo_finance_app.user.CurrentUserService;
 import com.solo_finance_app.user.User;
 import com.solo_finance_app.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,15 +21,12 @@ public class RecurringExpenseService {
             recurringExpenseRepository;
 
     private final UserRepository userRepository;
+    private final CurrentUserService currentUserService;
 
     public String createRecurringExpense(RecurringExpenseRequest request) {
 
-        String email = SecurityContextHolder.getContext()
-                        .getAuthentication()
-                        .getName();
+        User user = currentUserService.getCurrentUser();
 
-        User user = userRepository.findByEmail(email)
-                .orElseThrow();
 
         RecurringExpense recurringExpense = RecurringExpense.builder()
                         .title(request.getTitle())

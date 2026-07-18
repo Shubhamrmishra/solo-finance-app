@@ -3,6 +3,7 @@ package com.solo_finance_app.inventory.service;
 import com.solo_finance_app.inventory.dto.*;
 import com.solo_finance_app.inventory.entity.InventoryItem;
 import com.solo_finance_app.inventory.repository.InventoryRepository;
+import com.solo_finance_app.user.CurrentUserService;
 import com.solo_finance_app.user.User;
 import com.solo_finance_app.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +20,11 @@ public class InventoryService {
     private final InventoryRepository inventoryRepository;
     private final UserRepository userRepository;
 
+    private final CurrentUserService currentUserService;
+
     public String addItem(InventoryRequest request) {
 
-        String email = SecurityContextHolder.getContext()
-                        .getAuthentication()
-                        .getName();
-
-        User user = userRepository.findByEmail(email)
-                .orElseThrow();
+        User user = currentUserService.getCurrentUser();
 
         InventoryItem item = InventoryItem.builder()
                 .itemName(request.getItemName())
