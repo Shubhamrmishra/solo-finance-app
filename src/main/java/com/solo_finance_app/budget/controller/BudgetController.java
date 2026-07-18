@@ -1,6 +1,7 @@
 package com.solo_finance_app.budget.controller;
 
-import com.solo_finance_app.budget.dto.*;
+import com.solo_finance_app.budget.dto.request.BudgetRequest;
+import com.solo_finance_app.budget.dto.response.BudgetResponse;
 import com.solo_finance_app.budget.service.BudgetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

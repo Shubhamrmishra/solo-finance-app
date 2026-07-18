@@ -1,6 +1,7 @@
 package com.solo_finance_app.expense.controller;
 
-import com.solo_finance_app.expense.dto.ExpenseRequest;
+import com.solo_finance_app.expense.dto.request.ExpenseRequest;
+import com.solo_finance_app.expense.dto.response.ExpenseResponse;
 import com.solo_finance_app.expense.entity.Expense;
 import com.solo_finance_app.expense.service.ExpenseService;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,7 @@ public class ExpenseController {
     }
 
     @GetMapping
-    public List<Expense> getMyExpenses() {
-
+    public List<ExpenseResponse> getMyExpenses() {
         return expenseService.getMyExpenses();
     }
 

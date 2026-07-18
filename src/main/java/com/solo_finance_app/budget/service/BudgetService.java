@@ -1,6 +1,7 @@
 package com.solo_finance_app.budget.service;
 
-import com.solo_finance_app.budget.dto.*;
+import com.solo_finance_app.budget.dto.request.BudgetRequest;
+import com.solo_finance_app.budget.dto.response.BudgetResponse;
 import com.solo_finance_app.budget.entity.Budget;
 import com.solo_finance_app.budget.repository.BudgetRepository;
 import com.solo_finance_app.expense.repository.ExpenseRepository;
@@ -9,8 +10,6 @@ import com.solo_finance_app.user.CurrentUserService;
 import com.solo_finance_app.user.User;
 import com.solo_finance_app.user.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.
-        SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

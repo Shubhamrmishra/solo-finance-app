@@ -1,4 +1,4 @@
-package com.solo_finance_app.budget.dto;
+package com.solo_finance_app.budget.dto.request;
 
 import lombok.Data;
 
